@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:matrix/Widgets/rsvp_dialog.dart';
 import 'package:matrix/utils/constants.dart';
 
 import '../Blocs/event_bloc.dart';
@@ -26,6 +27,26 @@ class Homescreen extends StatelessWidget {
     if (selectedFilter != null) {
       context.read<EventBloc>().add(UpdateEventFilter(selectedFilter));
     }
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   final _searchController = TextEditingController();
@@ -204,7 +225,15 @@ class Homescreen extends StatelessWidget {
                         },
                       );
                     } else if (state is EventError) {
-                      return Center(child: Text(state.message));
+                      return Center(
+                        child: Text(
+                          'Some error encountered fetching the data!',
+                          style: TextStyle(
+                            fontSize: screenSize.width * 0.045,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      );
                     } else if (state is EventLoaded) {
                       final currentDate = DateTime.now();
                       final events = state.events.where((event) {
