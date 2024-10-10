@@ -17,32 +17,25 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   final TextEditingController _searchController = TextEditingController();
-  final FocusNode _searchFocusNode =
-      FocusNode(); // FocusNode to manage the TextField focus
+  final FocusNode _searchFocusNode = FocusNode();
   String _searchQuery = '';
-  EventFilter _eventFilter = EventFilter.all; // Default filter
+  EventFilter _eventFilter = EventFilter.all;
 
   @override
   void initState() {
     super.initState();
-
-    // Load events when the screen initializes
     context.read<EventBloc>().add(LoadEvents());
-
-    // Add a listener to the search controller to detect search query changes
     _searchController.addListener(_onSearchChanged);
   }
 
   @override
   void dispose() {
-    // Clean up the controller and focus node when the widget is disposed
     _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
-    _searchFocusNode.dispose(); // Dispose of the FocusNode
+    _searchFocusNode.dispose();
     super.dispose();
   }
 
-  // Method to handle changes in the search query
   void _onSearchChanged() {
     setState(() {
       _searchQuery = _searchController.text;
@@ -50,23 +43,16 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   void _openFilterDialog(BuildContext context) async {
-    // Unfocus the TextField before opening the dialog
     _searchFocusNode.unfocus();
-
-    // Open the dialog and wait for the result
     EventFilter? selectedFilter = await showDialog<EventFilter>(
       context: context,
       builder: (BuildContext context) {
-        return EventFilterDialog(
-          initialFilter: _eventFilter,
-        );
+        return EventFilterDialog(initialFilter: _eventFilter);
       },
     );
-
-    // If a filter is selected (i.e., not canceled), take action
     if (selectedFilter != null) {
       setState(() {
-        _eventFilter = selectedFilter; // Update the filter state
+        _eventFilter = selectedFilter;
       });
     }
   }
@@ -77,7 +63,6 @@ class _HomescreenState extends State<Homescreen> {
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-          // Unfocus the TextField when tapping outside
           _searchFocusNode.unfocus();
         },
         child: SafeArea(
@@ -108,7 +93,7 @@ class _HomescreenState extends State<Homescreen> {
                           const Spacer(),
                           SvgPicture.asset(
                             'assets/icons/logo_named.svg',
-                            height: 30, // Adjust height as needed
+                            height: 30,
                             fit: BoxFit.contain,
                           ),
                           const Spacer(),
@@ -131,8 +116,7 @@ class _HomescreenState extends State<Homescreen> {
                         children: [
                           Expanded(
                             child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(30),
@@ -145,9 +129,7 @@ class _HomescreenState extends State<Homescreen> {
                                     child: TextField(
                                       controller: _searchController,
                                       focusNode: _searchFocusNode,
-                                      // Attach FocusNode
-                                      style:
-                                          const TextStyle(color: Colors.white),
+                                      style: const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         hintText: 'Search',
                                         hintStyle: TextStyle(
@@ -173,21 +155,21 @@ class _HomescreenState extends State<Homescreen> {
                                 ),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                        Colors.white.withOpacity(0.4)),
+                                    Colors.white.withOpacity(0.4)),
                               ),
                               _eventFilter != EventFilter.all
                                   ? Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: Container(
-                                        width: 8,
-                                        height: 8,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    )
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              )
                                   : const SizedBox.shrink(),
                             ],
                           )
@@ -204,44 +186,42 @@ class _HomescreenState extends State<Homescreen> {
                     if (state is EventLoading) {
                       return ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        itemCount: 9, // Adjust the number of skeletons based on your UI design
+                        itemCount: 9,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: ShimmerEventCard()
+                            child: ShimmerEventCard(),
                           );
                         },
                       );
-                    }else if (state is EventError) {
+                    } else if (state is EventError) {
                       return Center(child: Text(state.message));
                     } else if (state is EventLoaded) {
                       final currentDate = DateTime.now();
                       final events = state.events.where((event) {
                         final eventDate =
-                            DateFormat('yyyy-MM-dd').parse(event.eventDate!);
+                        DateFormat('yyyy-MM-dd').parse(event.eventDate!);
                         final isUpcoming = eventDate.isAfter(currentDate);
                         bool matchesSearch = event.title!
                             .toLowerCase()
                             .contains(_searchQuery.toLowerCase());
 
-                        // Filter based on the search query and selected filter
                         bool matchesFilter;
                         if (_eventFilter == EventFilter.upcoming) {
                           matchesFilter = isUpcoming;
                         } else if (_eventFilter == EventFilter.past) {
                           matchesFilter = !isUpcoming;
                         } else {
-                          matchesFilter = true; // Include all events
+                          matchesFilter = true;
                         }
 
                         return matchesSearch && matchesFilter;
                       }).toList();
 
-                      // Check if the events list is empty
                       if (events.isEmpty) {
                         return Center(
                           child: Text(
-                            'No events available.',
+                            'No ${_eventFilter.toString().substring(_eventFilter.toString().indexOf('.') + 1)} events available.',
                             style: TextStyle(fontSize: 18, color: Colors.grey),
                           ),
                         );
@@ -262,7 +242,7 @@ class _HomescreenState extends State<Homescreen> {
                         },
                       );
                     }
-                    return Container();
+                    return SizedBox.shrink();
                   },
                 ),
               ),

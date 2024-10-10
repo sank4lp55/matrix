@@ -15,4 +15,7 @@ class ImageConstants {
   static String getImageUrl(String imageName) {
     return images[imageName] ?? 'Image not found'; // Return a default value if not found
   }
+
+  static const String onboardingImage="assets/Fusion festival 2009.jpeg";
+  static const String namedLogo='assets/icons/logo_named.svg';
 }
