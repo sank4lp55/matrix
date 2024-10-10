@@ -4,14 +4,16 @@ import '../Models/event_model.dart';
 
 class EventDetailScreen extends StatelessWidget {
   final Data event;
+  final String imageUrl;
 
-  const EventDetailScreen({Key? key, required this.event}) : super(key: key);
+  const EventDetailScreen(
+      {Key? key, required this.event, required this.imageUrl})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.title ?? 'Event Details'),
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: const Icon(
@@ -22,6 +24,23 @@ class EventDetailScreen extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/logo_named.svg',
+              height: 30, // Adjust height as needed
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(width: 8), // Add some space between logo and title
+            Expanded(
+              child: Text(
+                event.title ?? 'Event Details',
+                textAlign: TextAlign.center, // Center the title text
+              ),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -29,7 +48,7 @@ class EventDetailScreen extends StatelessWidget {
           children: [
             // Event Image
             Image.network(
-              'https://dummyjson.com/image/200x100/282828',
+              imageUrl,
               height: 250,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -198,59 +217,51 @@ class EventDetailScreen extends StatelessWidget {
                           bottomRight: Radius.circular(15),
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-
-
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8,0,8,0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                  },
-                                  child: Container(
-                                    child: Center(
-                                      child: const Text('Cancel',
-                                          style: TextStyle(color: Colors.red)),
-                                    ),
-                                  ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Container(
+                                child: Center(
+                                  child: const Text('Cancel',
+                                      style: TextStyle(color: Colors.red)),
                                 ),
-                                SizedBox(width: 10,),
-                                InkWell(
-                                  onTap: () {
-                                    // Implement RSVP logic here
-                                    Navigator.of(context)
-                                        .pop(); // Close the dialog
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                            'You have successfully RSVP\'d!'),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-
-                                    decoration: BoxDecoration(  color: Theme.of(context).primaryColor,borderRadius: BorderRadius.circular(5)),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                                        child: const Text('RSVP',
-                                            style: TextStyle(color: Colors.white)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                              ],
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
+                            SizedBox(
+                              width: 10,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                // Implement RSVP logic here
+                                Navigator.of(context).pop(); // Close the dialog
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text('You have successfully RSVP\'d!'),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                                    child: const Text('RSVP',
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

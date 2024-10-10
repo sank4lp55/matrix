@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-enum EventFilter { upcoming, past }
+enum EventFilter { all, upcoming, past }
 
 class EventFilterDialog extends StatefulWidget {
   final EventFilter initialFilter;
@@ -32,9 +31,8 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
         borderRadius: BorderRadius.circular(15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start, // Ensure left alignment
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top part with primary color
             Container(
               width: double.infinity,
               color: Theme.of(context).primaryColor,
@@ -42,8 +40,8 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
               child: Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/logo_named.svg', // Replace with your logo path
-                    height: 15, // Adjust height as needed
+                    'assets/icons/logo_named.svg',
+                    height: 15,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 5),
@@ -60,15 +58,14 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
             ),
             const SizedBox(height: 10),
 
-            // Content of the dialog
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Left-align the text
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Select which events you would like to see:',
-                    textAlign: TextAlign.left, // Left-align the text
+                    textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -78,11 +75,23 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
 
                   // Radio buttons for filtering
                   RadioListTile<EventFilter>(
+                    title: const Text('All Events'),
+                    value: EventFilter.all,
+                    groupValue: _selectedFilter,
+                    controlAffinity: ListTileControlAffinity.trailing,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (EventFilter? value) {
+                      setState(() {
+                        _selectedFilter = value;
+                      });
+                    },
+                  ),
+                  RadioListTile<EventFilter>(
                     title: const Text('Upcoming Events'),
                     value: EventFilter.upcoming,
                     groupValue: _selectedFilter,
                     controlAffinity: ListTileControlAffinity.trailing,
-                    contentPadding: EdgeInsets.zero, // Reduced padding
+                    contentPadding: EdgeInsets.zero,
                     onChanged: (EventFilter? value) {
                       setState(() {
                         _selectedFilter = value;
@@ -94,7 +103,7 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
                     value: EventFilter.past,
                     groupValue: _selectedFilter,
                     controlAffinity: ListTileControlAffinity.trailing,
-                    contentPadding: EdgeInsets.zero, // Reduced padding
+                    contentPadding: EdgeInsets.zero,
                     onChanged: (EventFilter? value) {
                       setState(() {
                         _selectedFilter = value;
@@ -106,7 +115,6 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
             ),
             const SizedBox(height: 10),
 
-            // Lower part styled similarly to RSVP dialog
             Container(
               decoration: BoxDecoration(
                 color: Colors.grey[100],
@@ -116,11 +124,10 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 10),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end, // Buttons stay aligned to the right
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // Cancel Button
                     InkWell(
                       onTap: () {
                         Navigator.of(context).pop(); // Close the dialog
@@ -133,11 +140,9 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
                     ),
                     const SizedBox(width: 10),
 
-                    // Apply Button
                     InkWell(
                       onTap: () {
-                        // Return the selected filter
-                        Navigator.of(context).pop(_selectedFilter);
+                        Navigator.of(context).pop(_selectedFilter); // Return the selected filter
                       },
                       child: Container(
                         decoration: BoxDecoration(

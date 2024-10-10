@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:matrix/utils/constants.dart';
 import '../Models/event_model.dart';
 import '../Screens/event_detail_screen.dart';
 
 class EventCard extends StatelessWidget {
   final Data event;
+  final int imageIndex;
 
-  const EventCard({Key? key, required this.event}) : super(key: key);
+  const EventCard({Key? key, required this.event,required this.imageIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl = 'https://dummyjson.com/image/200x100/282828'; // Example image URL
-
+    // Construct the image URL dynamically
+    String imageUrl = '';
+    if (imageIndex >= 0 && imageIndex < ImageConstants.images.length) {
+      imageUrl = '${ImageConstants.baseUrl}${ImageConstants.images[imageIndex]}';
+    } else {
+      // Provide a default image URL if the index is out of bounds
+      imageUrl = '${ImageConstants.baseUrl}${ImageConstants.images[0]}'; // Fallback to the first image
+    }
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => EventDetailScreen(event: event),
+            builder: (context) => EventDetailScreen(event: event,imageUrl: imageUrl,),
           ),
         );
       },
