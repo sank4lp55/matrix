@@ -1,24 +1,30 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matrix/Blocs/event_bloc.dart';
 import 'package:matrix/Repositories/event_repopsitory.dart';
-import 'package:matrix/Screens/homescreen.dart';
+import 'package:matrix/Screens/onboarding.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Event Management App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BlocProvider(
-        create: (context) => EventBloc(EventRepository()),
-        child: HomeScreen(),
+    return BlocProvider(
+      create: (context) => EventBloc(EventRepository()),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          primaryColor: Color(0xff0f2208)
+        ),
+        home: OnboardingPage(),
       ),
     );
   }
