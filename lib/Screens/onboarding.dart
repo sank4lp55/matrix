@@ -92,7 +92,7 @@ class OnboardingPage extends StatelessWidget {
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                                          MaterialPageRoute(builder: (context) => Homescreen()),
                                         );
                                       },
                                       borderRadius: BorderRadius.circular(10), // Ensure InkWell has the same border radius
