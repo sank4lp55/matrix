@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../Blocs/event_bloc.dart';
 import '../Widgets/event_card.dart';
 import '../Widgets/event_filter_dialog.dart';
+import '../Widgets/event_shimmer_card.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -201,8 +202,17 @@ class _HomescreenState extends State<Homescreen> {
                 child: BlocBuilder<EventBloc, EventState>(
                   builder: (context, state) {
                     if (state is EventLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is EventError) {
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        itemCount: 9, // Adjust the number of skeletons based on your UI design
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: ShimmerEventCard()
+                          );
+                        },
+                      );
+                    }else if (state is EventError) {
                       return Center(child: Text(state.message));
                     } else if (state is EventLoaded) {
                       final currentDate = DateTime.now();
