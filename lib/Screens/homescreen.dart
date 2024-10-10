@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../Blocs/event_bloc.dart';
 import '../Widgets/event_card.dart';
+import '../Widgets/event_filter_dialog.dart';
 import '../Widgets/search_field.dart';
 
 class Homescreen extends StatefulWidget {
@@ -21,6 +22,30 @@ class _HomescreenState extends State<Homescreen> {
     super.initState();
     context.read<EventBloc>().add(LoadEvents());
   }
+  void _openFilterDialog(BuildContext context) async {
+    // Open the dialog and wait for the result
+    EventFilter? selectedFilter = await showDialog<EventFilter>(
+      context: context,
+      builder: (BuildContext context) {
+        return EventFilterDialog(
+          initialFilter: EventFilter.upcoming, // Set the default filter
+        );
+      },
+    );
+
+    // If a filter is selected (i.e., not canceled), take action
+    if (selectedFilter != null) {
+      // Handle the selected filter here (e.g., filter your event list)
+      if (selectedFilter == EventFilter.upcoming) {
+        print('Upcoming Events Filtered');
+        // Add logic to filter upcoming events
+      } else {
+        print('Past Events Filtered');
+        // Add logic to filter past events
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +129,9 @@ class _HomescreenState extends State<Homescreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _openFilterDialog(context);
+                          },
                           icon: const Icon(
                             Icons.filter_list,
                             color: Colors.white,

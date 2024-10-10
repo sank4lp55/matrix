@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../Models/event_model.dart';
 
 class EventDetailScreen extends StatelessWidget {
@@ -11,14 +12,14 @@ class EventDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(event.title ?? 'Event Details'),
-        backgroundColor: Theme.of(context).primaryColor, // Use primary color
+        backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop(); // Go back to the previous screen
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -29,7 +30,6 @@ class EventDetailScreen extends StatelessWidget {
             // Event Image
             Image.network(
               'https://dummyjson.com/image/200x100/282828',
-              // Use the appropriate image URL
               height: 250,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -124,8 +124,6 @@ class EventDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  // Optionally add QR code image here if available
-                  // Image.network(event.qrCode ?? 'placeholder_qr_code_url', height: 100, width: 100),
 
                   const SizedBox(height: 20),
                 ],
@@ -133,6 +131,136 @@ class EventDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Handle RSVP action here
+          showDialog(
+            context: context,
+            builder: (context) => Dialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                // Rounded corners for the entire dialog
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Top part with primary color
+                    Container(
+                      width: double.infinity,
+                      color: Theme.of(context).primaryColor,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/logo_named.svg',
+                            // Replace with your logo path
+                            height: 15, // Adjust height as needed
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(width: 3),
+                          const Text(
+                            'RSVP',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text('Would you like to RSVP for this event?',
+                          style: TextStyle(fontSize: 16)),
+                    ),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'By RSVPing, you will receive updates about the event.',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Lower part styled
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        // Light background for the lower part
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10),
+
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(8,0,8,0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                  },
+                                  child: Container(
+                                    child: Center(
+                                      child: const Text('Cancel',
+                                          style: TextStyle(color: Colors.red)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10,),
+                                InkWell(
+                                  onTap: () {
+                                    // Implement RSVP logic here
+                                    Navigator.of(context)
+                                        .pop(); // Close the dialog
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'You have successfully RSVP\'d!'),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+
+                                    decoration: BoxDecoration(  color: Theme.of(context).primaryColor,borderRadius: BorderRadius.circular(5)),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                                        child: const Text('RSVP',
+                                            style: TextStyle(color: Colors.white)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+        backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.event, color: Colors.white),
       ),
     );
   }
