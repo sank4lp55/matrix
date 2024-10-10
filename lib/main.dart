@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matrix/Blocs/event_bloc.dart';
 import 'package:matrix/Repositories/event_repopsitory.dart';
 import 'package:matrix/Screens/onboarding.dart';
+import 'package:matrix/Screens/splash_screen.dart';
 import 'package:matrix/temp.dart';
 
 void main() {
@@ -22,10 +23,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffA2B69FFF)),
+          scaffoldBackgroundColor: Colors.black,
           useMaterial3: true,
           primaryColor: Color(0xff0f2208),
         ),
-        home: OnboardingPage(),
+        home: SplashScreen(),
       ),
     );
   }

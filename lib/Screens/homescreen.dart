@@ -10,23 +10,23 @@ import '../Widgets/event_filter_dialog.dart';
 import '../Widgets/event_shimmer_card.dart';
 
 class Homescreen extends StatelessWidget {
-   Homescreen({super.key});
+  Homescreen({super.key});
 
-   void _openFilterDialog(
-       BuildContext context, EventFilter currentFilter) async {
-     FocusScope.of(context).unfocus();
+  void _openFilterDialog(
+      BuildContext context, EventFilter currentFilter) async {
+    FocusScope.of(context).unfocus();
 
-     EventFilter? selectedFilter = await showDialog<EventFilter>(
-       context: context,
-       builder: (BuildContext context) {
-         return EventFilterDialog(initialFilter: currentFilter);
-       },
-     );
+    EventFilter? selectedFilter = await showDialog<EventFilter>(
+      context: context,
+      builder: (BuildContext context) {
+        return EventFilterDialog(initialFilter: currentFilter);
+      },
+    );
 
-     if (selectedFilter != null) {
-       context.read<EventBloc>().add(UpdateEventFilter(selectedFilter));
-     }
-   }
+    if (selectedFilter != null) {
+      context.read<EventBloc>().add(UpdateEventFilter(selectedFilter));
+    }
+  }
 
   final _searchController = TextEditingController();
 
@@ -37,6 +37,7 @@ class Homescreen extends StatelessWidget {
     final screenPadding = MediaQuery.of(context).padding;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

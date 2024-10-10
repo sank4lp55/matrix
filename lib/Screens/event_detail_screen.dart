@@ -24,6 +24,7 @@ class EventDetailScreen extends StatelessWidget {
     double iconSize = screenWidth * 0.05;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
