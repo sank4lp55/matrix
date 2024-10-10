@@ -47,6 +47,19 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.14.1"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/logo_unnamed.png"
+  adaptive_icon_foreground: "assets/icons/logo_unnamed.png"
+  adaptive_icon_background: "#03c7ed"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  remove_alpha_ios: true
+
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -70,6 +83,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/icons/logo_unnamed.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
