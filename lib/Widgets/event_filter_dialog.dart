@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 enum EventFilter { all, upcoming, past }
 
 class EventFilterDialog extends StatefulWidget {
   final EventFilter initialFilter;
 
-  const EventFilterDialog({Key? key, required this.initialFilter}) : super(key: key);
+  const EventFilterDialog({Key? key, required this.initialFilter})
+      : super(key: key);
 
   @override
   _EventFilterDialogState createState() => _EventFilterDialogState();
@@ -57,7 +59,6 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
               ),
             ),
             const SizedBox(height: 10),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -115,50 +116,50 @@ class _EventFilterDialogState extends State<EventFilterDialog> {
             ),
             const SizedBox(height: 10),
 
+            // Divided container
             Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    InkWell(
+              height: 40,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Left part with one color
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
                         Navigator.of(context).pop(); // Close the dialog
                       },
                       child: Container(
-                        child: const Center(
-                          child: Text('Cancel', style: TextStyle(color: Colors.red)),
+                        color: Colors.lightGreen.shade50,
+                        // Change this color as needed
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
-
-                    InkWell(
+                  ),
+                  // Right part with another color
+                  Expanded(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(15),
                       onTap: () {
-                        Navigator.of(context).pop(_selectedFilter); // Return the selected filter
+                        Navigator.of(context)
+                            .pop(_selectedFilter); // Return the selected filter
                       },
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                            child: Text('Apply', style: TextStyle(color: Colors.white)),
-                          ),
+                        color: Theme.of(context)
+                            .primaryColor, // Change this color as needed
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Apply',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
