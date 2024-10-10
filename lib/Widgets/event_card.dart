@@ -6,24 +6,28 @@ import '../Screens/event_detail_screen.dart';
 class EventCard extends StatelessWidget {
   final Data event;
   final int imageIndex;
+  final int id;
 
-  const EventCard({Key? key, required this.event,required this.imageIndex}) : super(key: key);
+  const EventCard(
+      {Key? key,
+      required this.event,
+      required this.imageIndex,
+      required this.id})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // Construct the image URL dynamically
-    String imageUrl = '';
-    if (imageIndex >= 0 && imageIndex < ImageConstants.images.length) {
-      imageUrl = '${ImageConstants.baseUrl}${ImageConstants.images[imageIndex]}';
-    } else {
-      // Provide a default image URL if the index is out of bounds
-      imageUrl = '${ImageConstants.baseUrl}${ImageConstants.images[0]}'; // Fallback to the first image
-    }
+    String imageUrl = ImageConstants.getImageUrl('image$id');;
+
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => EventDetailScreen(event: event,imageUrl: imageUrl,),
+            builder: (context) => EventDetailScreen(
+              event: event,
+              imageUrl: imageUrl,
+            ),
           ),
         );
       },
@@ -34,7 +38,8 @@ class EventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16), // Rounded corners
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16), // Ensures the image fits within rounded corners
+          borderRadius: BorderRadius.circular(16),
+          // Ensures the image fits within rounded corners
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -62,14 +67,15 @@ class EventCard extends StatelessWidget {
                     Text(
                       event.title ?? 'No Title',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Icons.calendar_today, size: 18, color: Colors.grey),
+                        const Icon(Icons.calendar_today,
+                            size: 18, color: Colors.grey),
                         const SizedBox(width: 4),
                         Text(
                           event.eventDate ?? 'No Date',
@@ -80,7 +86,8 @@ class EventCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        const Icon(Icons.location_on, size: 18, color: Colors.grey),
+                        const Icon(Icons.location_on,
+                            size: 18, color: Colors.grey),
                         const SizedBox(width: 4),
                         Text(
                           event.location ?? 'No Location',

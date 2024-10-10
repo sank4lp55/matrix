@@ -16,7 +16,8 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   final TextEditingController _searchController = TextEditingController();
-  final FocusNode _searchFocusNode = FocusNode(); // FocusNode to manage the TextField focus
+  final FocusNode _searchFocusNode =
+      FocusNode(); // FocusNode to manage the TextField focus
   String _searchQuery = '';
   EventFilter _eventFilter = EventFilter.all; // Default filter
 
@@ -129,7 +130,8 @@ class _HomescreenState extends State<Homescreen> {
                         children: [
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(30),
@@ -141,8 +143,10 @@ class _HomescreenState extends State<Homescreen> {
                                   Expanded(
                                     child: TextField(
                                       controller: _searchController,
-                                      focusNode: _searchFocusNode, // Attach FocusNode
-                                      style: const TextStyle(color: Colors.white),
+                                      focusNode: _searchFocusNode,
+                                      // Attach FocusNode
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       decoration: InputDecoration(
                                         hintText: 'Search',
                                         hintStyle: TextStyle(
@@ -168,21 +172,21 @@ class _HomescreenState extends State<Homescreen> {
                                 ),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
-                                    Colors.white.withOpacity(0.4)),
+                                        Colors.white.withOpacity(0.4)),
                               ),
                               _eventFilter != EventFilter.all
                                   ? Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              )
+                                      top: 0,
+                                      right: 0,
+                                      child: Container(
+                                        width: 8,
+                                        height: 8,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    )
                                   : const SizedBox.shrink(),
                             ],
                           )
@@ -204,7 +208,7 @@ class _HomescreenState extends State<Homescreen> {
                       final currentDate = DateTime.now();
                       final events = state.events.where((event) {
                         final eventDate =
-                        DateFormat('yyyy-MM-dd').parse(event.eventDate!);
+                            DateFormat('yyyy-MM-dd').parse(event.eventDate!);
                         final isUpcoming = eventDate.isAfter(currentDate);
                         bool matchesSearch = event.title!
                             .toLowerCase()
@@ -239,7 +243,11 @@ class _HomescreenState extends State<Homescreen> {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: EventCard(event: events[index],imageIndex: index,),
+                            child: EventCard(
+                              event: events[index],
+                              imageIndex: index,
+                              id: events[index].id ?? 0,
+                            ),
                           );
                         },
                       );

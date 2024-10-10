@@ -142,7 +142,14 @@ class EventDetailScreen extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
+                  Center(
+                      child: Image.asset(
+                    "assets/qr.png",
+                    width: 200,
+                    height: 200,
+                  )),
+                  SizedBox(height: 8),
 
                   const SizedBox(height: 20),
                 ],
