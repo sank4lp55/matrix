@@ -11,10 +11,7 @@ class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
 
   void _handleGetStarted(BuildContext context) {
-    // Dispatch the LoadEvents event to fetch the events
     context.read<EventBloc>().add(LoadEvents());
-
-    // Navigate to Homescreen
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Homescreen()),
