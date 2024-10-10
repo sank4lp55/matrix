@@ -8,9 +8,9 @@ class ShimmerEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(12),
-      elevation: 8, // Adds shadow for elevation effect
+      elevation: 8,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16), // Rounded corners
+        borderRadius: BorderRadius.circular(16),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
@@ -25,12 +25,12 @@ class ShimmerEventCard extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)), // Rounded top corners
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16.0), // Padding for content
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,11 +38,11 @@ class ShimmerEventCard extends StatelessWidget {
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
                     child: Container(
-                      height: 20, // Height for title shimmer
+                      height: 20,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
@@ -51,11 +51,11 @@ class ShimmerEventCard extends StatelessWidget {
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
                     child: Container(
-                      height: 16, // Height for date shimmer
-                      width: 100, // Fixed width for date shimmer
+                      height: 16,
+                      width: 100,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
@@ -64,11 +64,11 @@ class ShimmerEventCard extends StatelessWidget {
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
                     child: Container(
-                      height: 16, // Height for location shimmer
-                      width: 100, // Fixed width for location shimmer
+                      height: 16,
+                      width: 100,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(8), // Rounded corners
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),

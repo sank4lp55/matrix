@@ -11,9 +11,8 @@ class ImageConstants {
     'image128': 'https://i.pinimg.com/564x/03/8c/5e/038c5e5d0f40991297a7fc7a0680d756.jpg',
   };
 
-  // Method to get image URL by name
   static String getImageUrl(String imageName) {
-    return images[imageName] ?? 'Image not found'; // Return a default value if not found
+    return images[imageName] ?? 'Image not found';
   }
 
   static const String onboardingImage="assets/Fusion festival 2009.jpeg";

@@ -16,7 +16,6 @@ class RsvpDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Top part with primary color
             Container(
               width: double.infinity,
               color: Theme.of(context).primaryColor,
@@ -25,7 +24,7 @@ class RsvpDialog extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     'assets/icons/logo_named.svg',
-                    height: 15, // Adjust height as needed
+                    height: 15,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 3),
@@ -42,13 +41,13 @@ class RsvpDialog extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Left-aligned text
-             Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Align(
-                alignment: Alignment.centerLeft, // Align left
+                alignment: Alignment.centerLeft,
                 child: Text(
                   'Would you like to RSVP for this event?',
-                  style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
@@ -57,21 +56,20 @@ class RsvpDialog extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Align(
-                alignment: Alignment.centerLeft, // Align left
+                alignment: Alignment.centerLeft,
                 child: Text(
                   '* By RSVPing, you will receive updates about the event.',
-                  style: TextStyle(color: Colors.black,fontStyle: FontStyle.italic),
+                  style: TextStyle(
+                      color: Colors.black, fontStyle: FontStyle.italic),
                 ),
               ),
             ),
             const SizedBox(height: 15),
 
-            // Lower part styled
             Container(
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                // Light background for the lower part
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15),
@@ -104,8 +102,7 @@ class RsvpDialog extends StatelessWidget {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(15),
                         onTap: () {
-                          // Implement RSVP logic here
-                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.of(context).pop();
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('You have successfully RSVP\'d!'),
