@@ -1,12 +1,25 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // Import Bloc package
 import 'package:matrix/Screens/homescreen.dart';
 import 'package:matrix/Widgets/matrix_button.dart';
+import '../Blocs/event_bloc.dart';
 import '../utils/constants.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
+
+  void _handleGetStarted(BuildContext context) {
+    // Dispatch the LoadEvents event to fetch the events
+    context.read<EventBloc>().add(LoadEvents());
+
+    // Navigate to Homescreen
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Homescreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,13 +100,8 @@ class OnboardingPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: screenSize.height * 0.03),
                                 MatrixButton(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Homescreen()),
-                                    );
-                                  },
+                                  onTap: () => _handleGetStarted(context),
+                                  text: "Get Started!",
                                 ),
                               ],
                             ),

@@ -11,11 +11,13 @@ class EventLoading extends EventState {}
 
 class EventLoaded extends EventState {
   final List<Data> events;
+  final EventFilter eventFilter; // Added this property
+  final String searchQuery; // This holds the current search query
 
-  EventLoaded(this.events);
+  EventLoaded(this.events, this.eventFilter, this.searchQuery); // Updated constructor
 
   @override
-  List<Object?> get props => [events];
+  List<Object?> get props => [events, eventFilter, searchQuery]; // Include in props
 }
 
 class EventError extends EventState {

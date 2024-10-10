@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:matrix/Widgets/rsvp_dialog.dart';
+import 'package:matrix/utils/constants.dart';
 import '../Models/event_model.dart';
 
 class EventDetailScreen extends StatelessWidget {
@@ -13,6 +14,15 @@ class EventDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    double imageHeight = screenHeight * 0.3;
+    double padding = screenWidth * 0.05;
+    double titleFontSize = screenWidth * 0.06;
+    double bodyFontSize = screenWidth * 0.04;
+    double iconSize = screenWidth * 0.05;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -25,37 +35,24 @@ class EventDetailScreen extends StatelessWidget {
             Navigator.of(context).pop();
           },
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/logo_named.svg',
-              height: 30, // Adjust height as needed
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(width: 8), // Add some space between logo and title
-            Expanded(
-              child: Text(
-                event.title ?? 'Event Details',
-                textAlign: TextAlign.center, // Center the title text
-              ),
-            ),
-          ],
+        title: SvgPicture.asset(
+          ImageConstants.namedLogo,
+          height: 30,
+          fit: BoxFit.contain,
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Event Image
             Image.network(
               imageUrl,
-              height: 250,
+              height: imageHeight,
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(
-                  height: 250,
+                  height: imageHeight,
                   color: Colors.grey[300],
                   child: const Center(
                     child: Icon(Icons.error, color: Colors.red),
@@ -63,95 +60,109 @@ class EventDetailScreen extends StatelessWidget {
                 );
               },
             ),
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.symmetric(horizontal: padding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Event Title
                   Text(
                     event.title ?? 'No Title',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: titleFontSize,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   const SizedBox(height: 8),
-
-                  // Event Date and Time
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today,
-                          size: 18, color: Colors.grey),
+                      Icon(Icons.calendar_today,
+                          size: iconSize, color: Colors.grey),
                       const SizedBox(width: 4),
                       Text(
                         '${event.eventDate} ${event.startTime} ${event.startTimeType} - ${event.endTime} ${event.endTimeType}',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: bodyFontSize,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
-
-                  // Event Location
                   Row(
                     children: [
-                      const Icon(Icons.location_on,
-                          size: 18, color: Colors.grey),
+                      Icon(Icons.location_on,
+                          size: iconSize, color: Colors.grey),
                       const SizedBox(width: 4),
                       Text(
                         event.location ?? 'No Location',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: bodyFontSize,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-
-                  // Event Description
                   Text(
                     event.description ?? 'No Description',
-                    style: TextStyle(color: Colors.black54, fontSize: 16),
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: bodyFontSize,
+                    ),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 16),
-
-                  // Venue Information
                   Text(
                     'Venue: ${event.eventVenueName ?? 'N/A'}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: bodyFontSize * 1.1,
+                    ),
                   ),
                   const SizedBox(height: 4),
-                  Text(event.eventVenueAddress1 ?? 'N/A',
-                      style: TextStyle(color: Colors.grey[700])),
-                  Text(event.eventVenueAddress2 ?? 'N/A',
-                      style: TextStyle(color: Colors.grey[700])),
-                  const SizedBox(height: 16),
-
-                  // Attendee Information
                   Text(
-                    'Total Attendees: ${event.totalAttendee}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                    event.eventVenueAddress1 ?? 'N/A',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: bodyFontSize,
+                    ),
+                  ),
+                  Text(
+                    event.eventVenueAddress2 ?? 'N/A',
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: bodyFontSize,
+                    ),
                   ),
                   const SizedBox(height: 16),
-
-                  // QR Code Placeholder
+                  Text(
+                    'Total Attendees: ${event.totalAttendee}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: bodyFontSize * 1.1,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   Center(
                     child: Text(
                       'Scan your QR Code',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: bodyFontSize * 1.3,
+                      ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Center(
-                      child: Image.asset(
-                    "assets/qr.png",
-                    width: 200,
-                    height: 200,
-                  )),
-                  SizedBox(height: 8),
-
+                    child: Image.asset(
+                      "assets/qr.png",
+                      width: screenWidth * 0.5,
+                      height: screenWidth * 0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -161,10 +172,9 @@ class EventDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle RSVP action here
           showDialog(
             context: context,
-            builder: (context) => RsvpDialog()
+            builder: (context) => RsvpDialog(),
           );
         },
         backgroundColor: Theme.of(context).primaryColor,

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class MatrixButton extends StatelessWidget {
   final VoidCallback? onTap;
+  final String? text;
 
-  const MatrixButton({super.key, this.onTap});
+  const MatrixButton({super.key, this.onTap, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MatrixButton extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              "Get Started",
+              text ?? "Done",
               style: theme.textTheme.titleMedium?.copyWith(
                 color: theme.colorScheme.onPrimary,
                 fontWeight: FontWeight.w500,
