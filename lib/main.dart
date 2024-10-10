@@ -1,11 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:matrix/Blocs/event_bloc.dart';
 import 'package:matrix/Repositories/event_repopsitory.dart';
-import 'package:matrix/Screens/onboarding.dart';
 import 'package:matrix/Screens/splash_screen.dart';
-import 'package:matrix/temp.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +16,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => EventBloc(EventRepository()),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Matrix',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Color(0xffA2B69FFF)),

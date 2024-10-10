@@ -158,7 +158,7 @@ class EventDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Center(
                     child: Image.asset(
-                      "assets/qr.png",
+                      ImageConstants.dummyQr,
                       width: screenWidth * 0.5,
                       height: screenWidth * 0.5,
                     ),

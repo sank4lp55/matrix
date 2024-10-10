@@ -11,7 +11,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  double _opacity = 0.0; // Initial opacity
+  double _opacity = 0.0;
 
   @override
   void initState() {
@@ -20,14 +20,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startAnimation() {
-    // Start the fade-in animation
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _opacity = 1.0; // Fade in the logo
+        _opacity = 1.0;
       });
     });
 
-    // Wait for 2 more seconds after the logo is fully visible
     Future.delayed(const Duration(seconds: 3), () {
       _navigateToOnboarding();
     });
@@ -46,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: AnimatedOpacity(
           opacity: _opacity,
-          duration: const Duration(seconds: 1), // Duration of the fade-in
+          duration: const Duration(seconds: 1),
           child: SvgPicture.asset(
             'assets/icons/logo_named.svg',
             width: 170,

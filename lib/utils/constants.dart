@@ -18,4 +18,5 @@ class ImageConstants {
 
   static const String onboardingImage="assets/Fusion festival 2009.jpeg";
   static const String namedLogo='assets/icons/logo_named.svg';
+  static const String dummyQr="assets/qr.png";
 }
